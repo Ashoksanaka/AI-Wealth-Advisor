@@ -2,12 +2,13 @@
 
 # Digital Wealth Advisor
 
-**Avatar-based AI wealth management for bank mobile integration — personalized advisory from spending habits, investments, and goals via Arya, your digital wealth advisor.**
+**Avatar-based AI wealth management for Indian retail banking — personalized advisory from spending, investments, and goals via Arya, your digital wealth advisor.**
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=flat-square&logo=prisma)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Currency](https://img.shields.io/badge/Currency-INR-2E7D32?style=flat-square)
 
 </div>
 
@@ -17,58 +18,65 @@
 
 - [Overview](#overview)
 - [Features](#features)
+- [Currency (INR)](#currency-inr)
 - [Architecture](#architecture)
-- [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
+- [Quick Start](#quick-start)
 - [Environment Variables](#environment-variables)
-- [NPM Scripts](#npm-scripts)
+- [Scripts](#scripts)
 - [Demo Walkthrough](#demo-walkthrough)
-- [API Reference](#api-reference)
+- [API Overview](#api-overview)
 - [Deployment](#deployment)
 - [Documentation](#documentation)
 - [Security and Compliance](#security-and-compliance)
 - [Project Structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
-- [Hackathon Submission](#hackathon-submission)
+- [Hackathon](#hackathon)
 
 ---
 
 ## Overview
 
-Digital Wealth Advisor brings relationship-manager-quality guidance to retail banking customers at scale. The product combines a unified wealth dashboard with **Arya**, a 2D conversational avatar that narrates live financial data, delivers proactive behavioral nudges, and supports voice interaction — all embeddable inside a bank mobile app via WebView and a versioned REST API.
+Digital Wealth Advisor brings relationship-manager-quality guidance to retail banking customers at scale. The product combines a unified wealth dashboard with **Arya**, a 2D conversational avatar that narrates live financial data, delivers proactive behavioral nudges, and supports voice interaction.
 
-Built for mass-market retail investors who lack access to human relationship managers, with explicit scope for bank WebView integration, compliance-aware guidance, and synthetic demo data shaped for IDBI sandbox field mapping.
+Built for **Indian retail banking**:
+
+- All monetary values are **INR-native (₹)** — no multi-currency or FX layer
+- Demo personas (Sarah, Raj) use India-scale amounts — lakhs for goals, NIFTYBEES, Indian salary bands
+- Embeddable inside a bank mobile app via **WebView** (`/embed`) and a **versioned REST API** (`/api/v1/*`)
+- IDBI sandbox adapter stub for production field mapping ([`lib/integrations/idbi-sandbox-adapter.js`](lib/integrations/idbi-sandbox-adapter.js))
 
 ---
 
 ## Features
 
-### AI Advisor (Arya)
+### Arya — AI Wealth Advisor
 
-- Conversational chat with real portfolio, spending, and goal context
+- Conversational chat grounded in real portfolio, spending, and goal context
 - Streaming SSE responses with live thinking-status animation
 - Voice input (Web Speech API) and browser TTS output
 - Human handoff card for complex queries
 - Explainable recommendations ("Why this?") on insights and chat messages
 - Cold-start handling for thin-data users with adaptive greetings
+- Micro-invest and goal-contribution sliders in chat (INR amounts)
 
 ### Wealth Dashboard
 
-- Accounts, transactions, budgets, and monthly reports
+- Accounts, transactions, budgets, and monthly email reports
 - Portfolio holdings with allocation charts
-- Financial goals with progress tracking
+- Financial goals with progress tracking and scenario planning
 - AI-generated insight cards (NVIDIA NIM with rule-based fallback)
 - Receipt scanning via vision model
 
 ### Behavioral Analytics
 
-- Spending categorization and trend detection
-- Weekend spending spike and expense-surge patterns
+- Spending categorization and month-over-month trends
+- Weekend spending spikes and expense-surge detection
 - Salary and surplus detection for invest-now nudges
 - Goal drift alerts and portfolio concentration awareness
 - Risk profile from onboarding (conservative / moderate / aggressive)
+- Portfolio rebalance recommendations
 
 ### Bank Mobile Integration
 
@@ -87,6 +95,23 @@ Built for mass-market retail investors who lack access to human relationship man
 
 ---
 
+## Currency (INR)
+
+The app is **INR-native**. All UI, nudges, advisor copy, and transactional emails display amounts in **Indian Rupees (₹)**.
+
+| Topic | Detail |
+|-------|--------|
+| Formatter | [`lib/format-currency.js`](lib/format-currency.js) — `formatINR()`, `formatINRCompact()`, `CURRENCY_SYMBOL` |
+| Display format | Indian grouping via `Intl.NumberFormat('en-IN')` — e.g. `₹1,23,456` |
+| Compact format | Chart axes and tooltips — e.g. `₹1.2L`, `₹50K` |
+| API responses | `/api/v1/wealth-summary` and related endpoints return **raw numeric amounts**; mobile/native clients should format as INR on display |
+| Demo data | Stored values are already India-scale; no database conversion or FX logic |
+| Nudge threshold | Projected surplus nudge fires when surplus **> ₹5,000** |
+| Micro-invest slider | **₹500–₹50,000** range (default **₹1,000**) |
+| Goal contribution slider | **₹500–₹10,000**/month (default **₹2,000**) |
+
+---
+
 ## Architecture
 
 ```
@@ -98,20 +123,9 @@ Bank Mobile App  -->  /api/v1/* (REST)  -->  Domain Services  -->  PostgreSQL
                                                 +--> Arcjet (shield + bot detection)
 ```
 
-Full data-flow diagram and component breakdown: [docs/pitch/architecture.md](docs/pitch/architecture.md)
+Full data-flow diagram: [docs/pitch/architecture.md](docs/pitch/architecture.md)
 
 Mobile API design: [docs/mobile-integration.md](docs/mobile-integration.md)
-
----
-
-## Screenshots
-
-![Dashboard](https://github.com/user-attachments/assets/c2d51c48-f061-472a-a9d7-c66f6f5ed493)
-![Add new transactions](https://github.com/user-attachments/assets/687c9a38-d0da-4652-811c-f8a5fc3bdf5a)
-![Graph](https://github.com/user-attachments/assets/0f1afcf5-89a3-459f-8da8-ceb8e678cc0d)
-![All transactions](https://github.com/user-attachments/assets/83304098-ec55-421c-a7ea-b5089931e894)
-![Add bank account](https://github.com/user-attachments/assets/13d78149-f652-4945-9489-f113bcd563f9)
-![Monthly Report](https://github.com/user-attachments/assets/c5bc9f06-8635-47c2-962c-2a44c278ecdb)
 
 ---
 
@@ -136,17 +150,17 @@ Mobile API design: [docs/mobile-integration.md](docs/mobile-integration.md)
 ## Prerequisites
 
 - **Node.js 20+** and npm
-- **PostgreSQL 16** (local install or Docker)
+- **PostgreSQL 16** (local install, Docker, or managed — Neon / Supabase)
 - Service accounts (free tiers available):
   - [Clerk](https://dashboard.clerk.com) — authentication
   - [NVIDIA NIM](https://build.nvidia.com) — AI advisor and insights
   - [Resend](https://resend.com) — transactional email
   - [Arcjet](https://app.arcjet.com) — request shielding
-  - [Inngest Cloud](https://app.inngest.com) — production background jobs (optional for local dev with Docker)
+  - [Inngest Cloud](https://app.inngest.com) — production background jobs (optional locally with Docker Inngest dev server)
 
 ---
 
-## Getting Started
+## Quick Start
 
 ### Local development (npm)
 
@@ -157,7 +171,7 @@ npm i --legacy-peer-deps
 cp .env.example .env
 ```
 
-Edit `.env` with your credentials, then run migrations and start the dev server:
+Edit `.env` with your credentials, then migrate and start:
 
 ```shell
 npx prisma migrate deploy
@@ -166,21 +180,14 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Add `http://localhost:3000` as an allowed origin and redirect URL in your [Clerk dashboard](https://dashboard.clerk.com).
 
-### Docker (recommended — full stack with Inngest dev server)
-
-1. Copy the Docker env template and fill in SaaS API keys:
+### Docker (full stack with Inngest dev server)
 
 ```shell
 cp .env.docker.example .env
-```
-
-2. Start the stack:
-
-```shell
 docker compose up --build
 ```
 
-3. Run database migrations (first time only):
+First-time database setup:
 
 ```shell
 docker compose exec app npx prisma migrate deploy
@@ -206,7 +213,7 @@ Checks that key pages, components, integration stubs, and pitch docs are present
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `DATABASE_URL` | Yes | PostgreSQL connection (pooled URL on Vercel) |
+| `DATABASE_URL` | Yes | PostgreSQL connection (pooled URL on Vercel / Supabase port `6543`) |
 | `DIRECT_URL` | Yes | Direct PostgreSQL URL for Prisma migrations |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Yes | Clerk client key (build-time on Docker) |
 | `CLERK_SECRET_KEY` | Yes | Clerk server key |
@@ -229,7 +236,7 @@ Templates:
 
 ---
 
-## NPM Scripts
+## Scripts
 
 | Script | Purpose |
 |--------|---------|
@@ -245,20 +252,21 @@ Templates:
 
 ## Demo Walkthrough
 
-1. **Sign up** and complete the risk-profile onboarding (includes DPDP consent step)
+1. **Sign up** and complete risk-profile onboarding (includes DPDP consent)
 2. **Load demo data** from the dashboard — choose **Sarah** (moderate saver) or **Raj** (aggressive spender)
-3. **Explore** wealth summary, AI insights, portfolio, and goals on `/dashboard`
-4. **Chat with Arya** at `/advisor` — try voice, quick prompts, human handoff, and action buttons
-5. **Open `/embed`** for the bank micro-app experience (simulate SSO from the embed page)
-6. **Test the API** — `POST /api/v1/advisor/chat`, `GET /api/v1/nudges`, `GET /api/v1/wealth-summary`
+3. **Confirm INR display** — net worth, budgets, goals, and portfolio should show **₹** (e.g. `₹1,23,456`), not `$`
+4. **Explore** wealth summary, AI insights, portfolio, and goals on `/dashboard`
+5. **Chat with Arya** at `/advisor` — try voice, quick prompts, invest slider (₹500–₹50,000), and human handoff
+6. **Open `/embed`** for the bank micro-app experience
+7. **Test the API** — `POST /api/v1/advisor/chat`, `GET /api/v1/nudges`, `GET /api/v1/wealth-summary`
 
 Full judge demo script: [docs/pitch/demo-script.md](docs/pitch/demo-script.md)
 
 ---
 
-## API Reference
+## API Overview
 
-All `/api/v1/*` endpoints require Clerk authentication (session cookie or bearer token). Responses use a `{ success, data }` envelope.
+All `/api/v1/*` endpoints require Clerk authentication (session cookie or bearer token). Responses use a `{ success, data }` envelope. Monetary fields are **numeric INR values** without a currency symbol.
 
 | Method | Path | Purpose |
 |--------|------|---------|
@@ -280,32 +288,34 @@ All `/api/v1/*` endpoints require Clerk authentication (session cookie or bearer
 
 Full curl examples and WebView embedding: [docs/mobile-integration.md](docs/mobile-integration.md)
 
-SSO simulation details: [docs/sso-simulation.md](docs/sso-simulation.md)
+SSO simulation: [docs/sso-simulation.md](docs/sso-simulation.md)
 
 ---
 
 ## Deployment
 
-### Vercel (production)
+### Vercel (recommended)
 
-Production uses **Vercel + managed Postgres (Neon/Supabase) + Inngest Cloud**.
+Production stack: **Vercel + managed Postgres (Supabase / Neon) + Inngest Cloud + Clerk**.
 
 1. Copy [`.env.prod.example`](.env.prod.example) as a reference for Vercel env vars
-2. Create a managed database; set pooled `DATABASE_URL` + `DIRECT_URL`
+2. Create a managed database:
+   - **Supabase:** `DATABASE_URL` = transaction pooler, port **6543**, append `?pgbouncer=true`; `DIRECT_URL` = session pooler, port **5432**
+   - URL-encode special characters in the database password (`@` → `%40`, `#` → `%23`, `$` → `%24`)
 3. Add all env vars in the Vercel dashboard **before** the first deploy
 4. Run migrations once: `npx prisma migrate deploy`
 5. Deploy via Git integration or `vercel --prod`
 6. Register Inngest sync URL: `https://<your-domain>/api/inngest`
 7. Configure Clerk production domain and redirect URLs
 
-Full walkthrough: [docs/deploy/vercel.md](docs/deploy/vercel.md)
+Build configuration in [`vercel.json`](vercel.json): `prisma generate && next build`.
 
-Build configuration is in [`vercel.json`](vercel.json): `prisma generate && next build`.
+Full walkthrough: [docs/deploy/vercel.md](docs/deploy/vercel.md)
 
 **Pre-deploy checklist**
 
 - Never commit `.env` — secrets belong in Vercel env vars only
-- Rotate Clerk, NVIDIA, Arcjet, and Resend keys if `.env` was ever shared
+- Rotate Clerk, NVIDIA, Arcjet, and Resend keys if credentials were ever shared
 - Set `NVIDIA_MODEL=meta/llama-3.1-8b-instruct` for reliable advisor chat
 - Demo seed is blocked in production unless `ALLOW_DEMO_SEED=true`
 
@@ -319,7 +329,7 @@ docker compose -f docker-compose.prod.yml up --build -d
 
 Health check: `GET http://localhost:3000/api/health`
 
-Migrations run automatically on container start. Background jobs require [Inngest Cloud](https://www.inngest.com) with `INNGEST_EVENT_KEY` and `INNGEST_SIGNING_KEY` (dev Inngest vars are unset in prod compose).
+Migrations run automatically on container start. Background jobs require [Inngest Cloud](https://www.inngest.com) with `INNGEST_EVENT_KEY` and `INNGEST_SIGNING_KEY`.
 
 ---
 
@@ -360,7 +370,7 @@ Details: [docs/pitch/compliance-narrative.md](docs/pitch/compliance-narrative.md
 
 ```
 app/
-  (main)/          Dashboard, advisor, portfolio, goals, onboarding
+  (main)/          Dashboard, advisor, portfolio, goals, onboarding, accounts
   (auth)/          Clerk sign-in / sign-up
   embed/           Bank WebView micro-app
   api/
@@ -368,20 +378,22 @@ app/
     inngest/       Background job handler
     health/        Health check endpoint
 components/
-  advisor/         Arya avatar, chat, thinking status, handoff
+  advisor/         Arya avatar, chat, thinking status, handoff, action widgets
   embed/           Embed-mode wealth summary
   onboarding/      Risk profile wizard
   nudges/          Push notification center
 lib/
-  services/        Advisor and wealth domain services
-  integrations/    IDBI sandbox adapter stub
-  nvidia-ai.js     NVIDIA NIM client with model fallbacks
-  wealth-advisor.js LLM orchestration and fallbacks
-  wealth-stats.js  Behavioral analytics engine
-actions/           Next.js server actions
-prisma/            Schema and migrations
-docs/              Architecture, API, deployment, pitch materials
-scripts/           Docker entrypoints, demo verification
+  format-currency.js  INR formatting (formatINR, formatINRCompact)
+  services/           Advisor and wealth domain services
+  integrations/       IDBI sandbox adapter stub
+  nvidia-ai.js        NVIDIA NIM client with model fallbacks
+  wealth-advisor.js   LLM orchestration and fallbacks
+  wealth-stats.js     Behavioral analytics engine
+actions/              Next.js server actions
+prisma/               Schema and migrations
+docs/                 Architecture, API, deployment, pitch materials
+scripts/              Docker entrypoints, demo verification
+emails/               React Email templates (INR amounts)
 ```
 
 ---
@@ -392,20 +404,21 @@ scripts/           Docker entrypoints, demo verification
 |-------|-----|
 | Advisor chat hangs or times out | Set `NVIDIA_MODEL=meta/llama-3.1-8b-instruct` in `.env` |
 | Clerk redirect loop | Add `http://localhost:3000` to allowed origins and redirect URLs in Clerk dashboard |
-| Prisma connection errors | Run `npx prisma migrate deploy`; verify `DATABASE_URL` (pooled) vs `DIRECT_URL` (direct) |
+| Prisma P1000 / P1001 on Vercel | Verify `DATABASE_URL` (pooled, port 6543) and `DIRECT_URL` (session pooler); URL-encode password |
 | `.next` permission denied after Docker | `sudo rm -rf .next` then rebuild (Docker may create root-owned files) |
 | Background jobs not running | Local: use `docker compose` with Inngest dev server. Prod: configure Inngest Cloud |
 | Demo seed fails in production | Set `ALLOW_DEMO_SEED=true` or use a preview/staging environment |
-| `npm run lint` fails on typescript | Install `typescript` as a dev dependency or run `npm run build` to verify instead |
+| Amounts show wrong symbol | App is INR-native; redeploy latest build if you see legacy `$` formatting |
+| `npm run lint` fails on typescript | `typescript` is in devDependencies; run `npm run build` to verify compile |
 
 ---
 
-## Hackathon Submission
+## Hackathon
 
-Built for a bank hackathon brief: avatar-based digital wealth advisory integrated into mobile banking for retail customers.
+Built for a bank hackathon brief: avatar-based digital wealth advisory integrated into mobile banking for Indian retail customers.
 
-| Area | Resource |
-|------|----------|
+| Resource | Link |
+|----------|------|
 | Scope decisions | [docs/pitch/scope-decisions.md](docs/pitch/scope-decisions.md) |
 | Live demo script | [docs/pitch/demo-script.md](docs/pitch/demo-script.md) |
 | Compliance narrative | [docs/pitch/compliance-narrative.md](docs/pitch/compliance-narrative.md) |
