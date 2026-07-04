@@ -424,6 +424,7 @@ Built for a bank hackathon brief: avatar-based digital wealth advisory integrate
 | Compliance narrative | [docs/pitch/compliance-narrative.md](docs/pitch/compliance-narrative.md) |
 | Architecture | [docs/pitch/architecture.md](docs/pitch/architecture.md) |
 | Pitch deck outline | [docs/pitch/pitch-deck-outline.md](docs/pitch/pitch-deck-outline.md) |
+| Prototype performance report | [docs/pitch/prototype-performance-report.md](docs/pitch/prototype-performance-report.md) |
 | Backup video script | [docs/pitch/video-script.md](docs/pitch/video-script.md) |
 | Rubric self-score | [docs/pitch/rubric-self-score.md](docs/pitch/rubric-self-score.md) |
 | Business ROI | [docs/pitch/business-roi.md](docs/pitch/business-roi.md) |

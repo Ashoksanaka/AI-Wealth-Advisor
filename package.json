@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "demo:verify": "node scripts/demo-verify.js",
+    "benchmark:prod": "node scripts/benchmark-production.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {
