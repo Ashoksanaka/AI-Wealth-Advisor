@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_wealth_management
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ai_wealth_management"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ai_wealth_management
+      DIRECT_URL: postgresql://postgres:postgres@postgres:5432/ai_wealth_management
+      INNGEST_DEV: "1"
+      INNGEST_BASE_URL: http://inngest:8288
+      INNGEST_SERVE_HOST: http://app:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  inngest:
+    image: inngest/inngest
+    command: inngest dev -u http://app:3000/api/inngest
+    ports:
+      - "8288:8288"
+      - "8289:8289"
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:

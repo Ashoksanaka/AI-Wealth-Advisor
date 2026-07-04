@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 33% 3%;
+    --foreground: 214 32% 93%;
+    --card: 216 30% 7%;
+    --card-foreground: 214 32% 93%;
+    --popover: 216 30% 7%;
+    --popover-foreground: 214 32% 93%;
+    --primary: 160 64% 52%;
+    --primary-foreground: 210 33% 3%;
+    --secondary: 216 22% 12%;
+    --secondary-foreground: 214 32% 93%;
+    --muted: 216 22% 12%;
+    --muted-foreground: 215 16% 52%;
+    --accent: 216 22% 14%;
+    --accent-foreground: 214 32% 93%;
+    --destructive: 351 89% 67%;
+    --destructive-foreground: 214 32% 93%;
+    --border: 216 22% 16%;
+    --input: 216 22% 14%;
+    --ring: 160 64% 52%;
+    --chart-1: 160 64% 52%;
+    --chart-2: 160 84% 39%;
+    --chart-3: 351 89% 67%;
+    --chart-4: 215 16% 52%;
+    --chart-5: 216 22% 20%;
+    --radius: 0.5rem;
+    --income: 160 64% 52%;
+    --expense: 351 89% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+  .font-body {
+    font-family: var(--font-body), system-ui, sans-serif;
+  }
+  .font-data {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display-title {
+    @apply font-display text-foreground font-semibold tracking-tight;
+  }
+
+  .surface {
+    @apply bg-card border border-border/60;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(
+      circle,
+      hsl(var(--border) / 0.4) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+
+  .icon-ring {
+    @apply flex h-10 w-10 items-center justify-center rounded-lg border border-primary/30 text-primary;
+  }
+
+  .balance-glow {
+    @apply font-data text-foreground;
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.35);
+  }
+
+  .income-text {
+    color: hsl(var(--income));
+  }
+
+  .expense-text {
+    color: hsl(var(--expense));
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-widest text-primary;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+
+  body.embed-mode header,
+  body.embed-mode footer {
+    display: none;
+  }
+
+  body.embed-mode main {
+    padding-top: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+  }
+}

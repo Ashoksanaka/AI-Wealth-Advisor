@@ -1,0 +1,50 @@
+[
+  {
+    "symbol": "NIFTYBEES",
+    "name": "YourBank Nifty 50 ETF",
+    "assetClass": "EQUITY",
+    "riskTier": "MODERATE",
+    "description": "Tracks Nifty 50 index. Suitable for long-term equity exposure.",
+    "tags": ["equity", "etf", "index", "growth"]
+  },
+  {
+    "symbol": "HDFC-DF",
+    "name": "YourBank Debt Fund",
+    "assetClass": "MF",
+    "riskTier": "CONSERVATIVE",
+    "description": "Short-duration debt mutual fund for stable returns.",
+    "tags": ["debt", "mf", "conservative", "income"]
+  },
+  {
+    "symbol": "GOLDBEES",
+    "name": "YourBank Gold ETF",
+    "assetClass": "GOLD",
+    "riskTier": "MODERATE",
+    "description": "Gold ETF for portfolio diversification and inflation hedge.",
+    "tags": ["gold", "etf", "hedge", "diversification"]
+  },
+  {
+    "symbol": "FD-12M",
+    "name": "YourBank 12-Month FD",
+    "assetClass": "FD",
+    "riskTier": "CONSERVATIVE",
+    "description": "Fixed deposit with guaranteed returns over 12 months.",
+    "tags": ["fd", "fixed", "deposit", "safe"]
+  },
+  {
+    "symbol": "ESG-GREEN",
+    "name": "YourBank ESG Equity Fund",
+    "assetClass": "MF",
+    "riskTier": "MODERATE",
+    "description": "ESG-screened equity fund excluding fossil fuel companies.",
+    "tags": ["esg", "green", "sustainable", "equity"]
+  },
+  {
+    "symbol": "TECH-FOCUS",
+    "name": "YourBank Tech Growth Fund",
+    "assetClass": "MF",
+    "riskTier": "AGGRESSIVE",
+    "description": "Technology sector focused fund for growth-oriented investors.",
+    "tags": ["tech", "growth", "equity", "aggressive"]
+  }
+]
