@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { saveRiskProfile } from "@/actions/risk-profile";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { CURRENCY_SYMBOL } from "@/lib/format-currency";
 import { Shield, TrendingUp, Target, PiggyBank } from "lucide-react";
 
 const STEPS = [
@@ -166,7 +167,7 @@ export function OnboardingWizard() {
                 How much can you set aside each month for savings and investments?
               </p>
               <div className="space-y-2">
-                <Label htmlFor="savings">Amount ($)</Label>
+                <Label htmlFor="savings">Amount ({CURRENCY_SYMBOL})</Label>
                 <Input
                   id="savings"
                   type="number"

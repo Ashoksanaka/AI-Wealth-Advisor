@@ -52,6 +52,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { formatINR } from "@/lib/format-currency";
 import { categoryColors } from "@/data/categories";
 import { bulkDeleteTransactions } from "@/actions/accounts";
 import useFetch from "@/hooks/use-fetch";
@@ -378,8 +379,8 @@ export function TransactionTable({ transactions }) {
                         : "income-text"
                     )}
                   >
-                    {transaction.type === "EXPENSE" ? "-" : "+"}$
-                    {transaction.amount.toFixed(2)}
+                    {transaction.type === "EXPENSE" ? "-" : "+"}
+                    {formatINR(transaction.amount, { decimals: 2 })}
                   </TableCell>
                   <TableCell>
                     {transaction.isRecurring ? (

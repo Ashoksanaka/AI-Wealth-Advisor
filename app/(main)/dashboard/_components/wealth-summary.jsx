@@ -1,17 +1,18 @@
 import { TrendingUp, Wallet, Target, PiggyBank } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatINR } from "@/lib/format-currency";
 
 export function WealthSummary({ summary }) {
   const stats = [
     {
       label: "Net Worth",
-      value: `$${summary.netWorth.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+      value: formatINR(summary.netWorth),
       icon: Wallet,
       highlight: true,
     },
     {
       label: "Portfolio Value",
-      value: `$${summary.portfolio.totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+      value: formatINR(summary.portfolio.totalValue),
       icon: TrendingUp,
       sub: summary.portfolio.totalGainLoss >= 0 ? "gain" : "loss",
       change: summary.portfolio.totalGainLoss,
@@ -54,11 +55,8 @@ export function WealthSummary({ summary }) {
                   stat.change >= 0 ? "income-text" : "expense-text"
                 }`}
               >
-                {stat.change >= 0 ? "+" : ""}$
-                {stat.change.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })}{" "}
-                P&L
+                {stat.change >= 0 ? "+" : ""}
+                {formatINR(stat.change)} P&L
               </p>
             )}
           </CardContent>

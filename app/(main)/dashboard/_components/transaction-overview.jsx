@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { formatINR } from "@/lib/format-currency";
 
 const CHART_COLORS = [
   "hsl(var(--chart-1))",
@@ -136,7 +137,7 @@ export function DashboardOverview({ accounts, transactions }) {
                     ) : (
                       <ArrowUpRight className="mr-1 h-3.5 w-3.5" />
                     )}
-                    ${transaction.amount.toFixed(2)}
+                    {formatINR(transaction.amount, { decimals: 2 })}
                   </div>
                 </div>
               ))
@@ -173,7 +174,7 @@ export function DashboardOverview({ accounts, transactions }) {
                     outerRadius={80}
                     fill="hsl(var(--chart-1))"
                     dataKey="value"
-                    label={({ name, value }) => `${name}: $${value.toFixed(2)}`}
+                    label={({ name, value }) => `${name}: ${formatINR(value, { decimals: 2 })}`}
                   >
                     {pieChartData.map((entry, index) => (
                       <Cell
@@ -183,7 +184,7 @@ export function DashboardOverview({ accounts, transactions }) {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value) => `$${value.toFixed(2)}`}
+                    formatter={(value) => formatINR(value, { decimals: 2 })}
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
                       border: "1px solid hsl(var(--border))",

@@ -21,6 +21,7 @@ import { createGoal, deleteGoal } from "@/actions/goals";
 import { SeedDemoButton } from "@/components/seed-demo-button";
 import { computeGoalStats } from "@/lib/wealth-stats";
 import { GoalScenarioDrawer } from "./goal-scenario-drawer";
+import { CURRENCY_SYMBOL, formatINR } from "@/lib/format-currency";
 
 export function GoalsClient({ goals }) {
   const router = useRouter();
@@ -99,7 +100,7 @@ export function GoalsClient({ goals }) {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Target Amount ($)</Label>
+                    <Label>Target Amount ({CURRENCY_SYMBOL})</Label>
                     <Input
                       type="number"
                       value={form.targetAmount}
@@ -110,7 +111,7 @@ export function GoalsClient({ goals }) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Current Amount ($)</Label>
+                    <Label>Current Amount ({CURRENCY_SYMBOL})</Label>
                     <Input
                       type="number"
                       value={form.currentAmount}
@@ -147,8 +148,7 @@ export function GoalsClient({ goals }) {
                   <div>
                     <p className="font-medium">{goal.name}</p>
                     <p className="text-sm text-muted-foreground font-data">
-                      ${goal.currentAmount.toLocaleString()} of $
-                      {goal.targetAmount.toLocaleString()}
+                      {formatINR(goal.currentAmount)} of {formatINR(goal.targetAmount)}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -164,8 +164,7 @@ export function GoalsClient({ goals }) {
                 </div>
                 <Progress value={goal.progress} className="h-2 mb-2" />
                 <p className="text-xs text-muted-foreground">
-                  {goal.progress}% complete · ${goal.remaining.toLocaleString()}{" "}
-                  to go
+                  {goal.progress}% complete · {formatINR(goal.remaining)} to go
                 </p>
               </CardContent>
             </Card>

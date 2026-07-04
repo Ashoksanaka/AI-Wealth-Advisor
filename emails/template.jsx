@@ -8,6 +8,7 @@ import {
     Section,
     Text,
   } from "@react-email/components";
+  import { formatINR } from "@/lib/format-currency";
   
   // Dummy data for preview
   const PREVIEW_DATA = {
@@ -68,16 +69,16 @@ import {
               <Section style={styles.statsContainer}>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Total Income</Text>
-                  <Text style={styles.heading}>${data?.stats.totalIncome}</Text>
+                  <Text style={styles.heading}>{formatINR(data?.stats.totalIncome)}</Text>
                 </div>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Total Expenses</Text>
-                  <Text style={styles.heading}>${data?.stats.totalExpenses}</Text>
+                  <Text style={styles.heading}>{formatINR(data?.stats.totalExpenses)}</Text>
                 </div>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Net</Text>
                   <Text style={styles.heading}>
-                    ${data?.stats.totalIncome - data?.stats.totalExpenses}
+                    {formatINR(data?.stats.totalIncome - data?.stats.totalExpenses)}
                   </Text>
                 </div>
               </Section>
@@ -90,7 +91,7 @@ import {
                     ([category, amount]) => (
                       <div key={category} style={styles.row}>
                         <Text style={styles.text}>{category}</Text>
-                        <Text style={styles.text}>${amount}</Text>
+                        <Text style={styles.text}>{formatINR(amount)}</Text>
                       </div>
                     )
                   )}
@@ -135,16 +136,16 @@ import {
               <Section style={styles.statsContainer}>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Budget Amount</Text>
-                  <Text style={styles.heading}>${data?.budgetAmount}</Text>
+                  <Text style={styles.heading}>{formatINR(data?.budgetAmount)}</Text>
                 </div>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Spent So Far</Text>
-                  <Text style={styles.heading}>${data?.totalExpenses}</Text>
+                  <Text style={styles.heading}>{formatINR(data?.totalExpenses)}</Text>
                 </div>
                 <div style={styles.stat}>
                   <Text style={styles.text}>Remaining</Text>
                   <Text style={styles.heading}>
-                    ${data?.budgetAmount - data?.totalExpenses}
+                    {formatINR(data?.budgetAmount - data?.totalExpenses)}
                   </Text>
                 </div>
               </Section>

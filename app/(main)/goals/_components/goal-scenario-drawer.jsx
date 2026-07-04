@@ -19,6 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { formatINR, formatINRCompact } from "@/lib/format-currency";
 
 const SCENARIOS = [
   { id: "base", label: "Base case", growth: 0.07, color: "hsl(var(--chart-1))" },
@@ -90,9 +91,9 @@ export function GoalScenarioDrawer({ goal }) {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={timeline}>
                 <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                <YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => formatINRCompact(v)} />
                 <Tooltip
-                  formatter={(value) => [`$${Number(value).toLocaleString()}`, "Projected"]}
+                  formatter={(value) => [formatINR(value), "Projected"]}
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
@@ -111,11 +112,11 @@ export function GoalScenarioDrawer({ goal }) {
           <p className="text-sm text-center">
             {onTrack ? (
               <span className="text-primary">
-                On track to reach ${goal.targetAmount.toLocaleString()} under {scenario.label}
+                On track to reach {formatINR(goal.targetAmount)} under {scenario.label}
               </span>
             ) : (
               <span className="text-amber-500">
-                {scenario.label}: projected ${finalValue.toLocaleString()} — increase contributions
+                {scenario.label}: projected {formatINR(finalValue)} — increase contributions
               </span>
             )}
           </p>

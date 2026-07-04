@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingDown } from "lucide-react";
+import { formatINR, formatINRCompact } from "@/lib/format-currency";
 
 export function SpendingTrend({ monthlyTrend, expenseTrend }) {
   return (
@@ -46,10 +47,10 @@ export function SpendingTrend({ monthlyTrend, expenseTrend }) {
               />
               <YAxis
                 tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                tickFormatter={(v) => `$${v}`}
+                tickFormatter={(v) => formatINRCompact(v)}
               />
               <Tooltip
-                formatter={(value) => [`$${value}`, "Expenses"]}
+                formatter={(value) => [formatINR(value), "Expenses"]}
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
                   border: "1px solid hsl(var(--border))",

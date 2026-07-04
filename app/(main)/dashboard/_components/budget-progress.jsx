@@ -17,6 +17,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateBudget } from "@/actions/budget";
+import { formatINR } from "@/lib/format-currency";
 
 export function BudgetProgress({ initialBudget, currentExpenses }) {
   const router = useRouter();
@@ -120,11 +121,11 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                     {budget ? (
                       <>
                         <span className="font-data">
-                          ${currentExpenses.toFixed(2)}
+                          {formatINR(currentExpenses, { decimals: 2 })}
                         </span>{" "}
                         of{" "}
                         <span className="font-data">
-                          ${budget.amount.toFixed(2)}
+                          {formatINR(budget.amount, { decimals: 2 })}
                         </span>{" "}
                         spent
                       </>

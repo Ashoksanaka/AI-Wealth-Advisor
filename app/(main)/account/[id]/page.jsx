@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 import { AccountChart } from "../_components/account-chart";
 import { AccountSkeleton } from "@/components/page-skeleton";
 import { PageHeader } from "@/components/page-header";
-import { CreditCard, PiggyBank, DollarSign, List } from "lucide-react";
+import { CreditCard, PiggyBank, IndianRupee, List } from "lucide-react";
+import { formatINR } from "@/lib/format-currency";
 
 export default async function AccountPage({ params }) {
   const { id } = await params;
@@ -31,14 +32,14 @@ export default async function AccountPage({ params }) {
       <div className="sticky top-[4.5rem] z-40 surface rounded-lg p-4 flex flex-wrap gap-4 justify-between items-center bg-card/95 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <div className="icon-ring h-9 w-9">
-            <DollarSign className="h-4 w-4" />
+            <IndianRupee className="h-4 w-4" />
           </div>
           <div>
             <p className="text-xs text-muted-foreground uppercase tracking-wide">
               Balance
             </p>
             <p className="balance-glow text-2xl font-semibold">
-              ${parseFloat(account.balance).toFixed(2)}
+              {formatINR(account.balance, { decimals: 2 })}
             </p>
           </div>
         </div>

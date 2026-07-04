@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BarChart3, TrendingUp, TrendingDown, Scale } from "lucide-react";
+import { formatINR, formatINRCompact } from "@/lib/format-currency";
 
 const DATE_RANGES = {
   "7D": { label: "Last 7 Days", days: 7 },
@@ -108,7 +109,7 @@ export function AccountChart({ transactions }) {
               Income
             </div>
             <p className="font-data text-base font-semibold income-text">
-              ${totals.income.toFixed(2)}
+              {formatINR(totals.income, { decimals: 2 })}
             </p>
           </div>
           <div className="surface rounded-md p-3 text-center">
@@ -117,7 +118,7 @@ export function AccountChart({ transactions }) {
               Expenses
             </div>
             <p className="font-data text-base font-semibold expense-text">
-              ${totals.expense.toFixed(2)}
+              {formatINR(totals.expense, { decimals: 2 })}
             </p>
           </div>
           <div className="surface rounded-md p-3 text-center">
@@ -130,7 +131,7 @@ export function AccountChart({ transactions }) {
                 net >= 0 ? "income-text" : "expense-text"
               }`}
             >
-              ${net.toFixed(2)}
+              {formatINR(net, { decimals: 2 })}
             </p>
           </div>
         </div>
@@ -156,11 +157,11 @@ export function AccountChart({ transactions }) {
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value) => `$${value}`}
+                tickFormatter={(value) => formatINRCompact(value)}
                 stroke="hsl(var(--muted-foreground))"
               />
               <Tooltip
-                formatter={(value) => [`$${value}`, undefined]}
+                formatter={(value) => [formatINR(value), undefined]}
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
                   border: "1px solid hsl(var(--border))",

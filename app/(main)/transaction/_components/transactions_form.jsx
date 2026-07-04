@@ -7,7 +7,7 @@ import {
   CalendarIcon,
   Loader2,
   ArrowUpDown,
-  DollarSign,
+  IndianRupee,
   Tag,
   FileText,
   Repeat,
@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/card";
 import { CreateAccountDrawer } from "@/components/create-account-drawer";
 import { cn } from "@/lib/utils";
+import { formatINR } from "@/lib/format-currency";
 import { createTransaction, updateTransaction } from "@/actions/transaction";
 import { transactionSchema } from "@/app/lib/schema";
 import { ReceiptScanner } from "./receipt-scanner";
@@ -212,7 +213,7 @@ export function AddTransactionForm({
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <FieldLabel icon={DollarSign}>Amount</FieldLabel>
+                <FieldLabel icon={IndianRupee}>Amount</FieldLabel>
                 <Input
                   type="number"
                   step="0.01"
@@ -237,7 +238,7 @@ export function AddTransactionForm({
                   <SelectContent>
                     {accounts.map((account) => (
                       <SelectItem key={account.id} value={account.id}>
-                        {account.name} (${parseFloat(account.balance).toFixed(2)})
+                        {account.name} ({formatINR(account.balance, { decimals: 2 })})
                       </SelectItem>
                     ))}
                     <CreateAccountDrawer>

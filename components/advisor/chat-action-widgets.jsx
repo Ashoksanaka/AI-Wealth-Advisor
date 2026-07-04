@@ -4,10 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { formatINR } from "@/lib/format-currency";
 
 function InvestSlider({ action }) {
   const router = useRouter();
-  const [amount, setAmount] = useState(action.default ?? 50);
+  const [amount, setAmount] = useState(action.default ?? 1000);
 
   return (
     <div className="mt-2 p-3 rounded-lg bg-primary/5 border border-primary/20 space-y-2">
@@ -15,14 +16,14 @@ function InvestSlider({ action }) {
       <div className="flex items-center gap-2">
         <input
           type="range"
-          min={action.min ?? 25}
-          max={action.max ?? 500}
+          min={action.min ?? 500}
+          max={action.max ?? 50000}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           className="flex-1 accent-primary"
           aria-label="Investment amount"
         />
-        <span className="text-xs font-data w-12 text-right">${amount}</span>
+        <span className="text-xs font-data w-16 text-right">{formatINR(amount)}</span>
       </div>
       <Button
         size="sm"
@@ -33,7 +34,7 @@ function InvestSlider({ action }) {
           )
         }
       >
-        Micro-invest ${amount}
+        Micro-invest {formatINR(amount)}
       </Button>
     </div>
   );
@@ -41,7 +42,7 @@ function InvestSlider({ action }) {
 
 function GoalSlider({ action }) {
   const router = useRouter();
-  const [amount, setAmount] = useState(action.default ?? 200);
+  const [amount, setAmount] = useState(action.default ?? 2000);
 
   return (
     <div className="mt-2 p-3 rounded-lg bg-accent/30 border border-border/40 space-y-2">
@@ -49,14 +50,14 @@ function GoalSlider({ action }) {
       <div className="flex items-center gap-2">
         <input
           type="range"
-          min={action.min ?? 50}
-          max={action.max ?? 1000}
+          min={action.min ?? 500}
+          max={action.max ?? 10000}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           className="flex-1 accent-primary"
           aria-label="Goal contribution amount"
         />
-        <span className="text-xs font-data w-14 text-right">${amount}/mo</span>
+        <span className="text-xs font-data w-20 text-right">{formatINR(amount)}/mo</span>
       </div>
       <Button
         size="sm"
@@ -66,7 +67,7 @@ function GoalSlider({ action }) {
           router.push(`${action.href || "/goals"}?contribution=${amount}`)
         }
       >
-        Apply ${amount}/mo
+        Apply {formatINR(amount)}/mo
       </Button>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Wallet, CreditCard, DollarSign, Star } from "lucide-react";
+import { Loader2, Wallet, CreditCard, IndianRupee, Star } from "lucide-react";
 import useFetch from "@/hooks/use-fetch";
 
 import { Button } from "@/components/ui/button";
@@ -130,7 +130,7 @@ export function CreateAccountDrawer({ children }) {
             </div>
 
             <div className="space-y-2">
-              <FieldLabel icon={DollarSign} htmlFor="balance">
+              <FieldLabel icon={IndianRupee} htmlFor="balance">
                 Initial balance
               </FieldLabel>
               <Input

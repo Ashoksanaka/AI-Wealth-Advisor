@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { formatINR } from "@/lib/format-currency";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { updateDefaultAccount } from "@/actions/accounts";
@@ -84,7 +85,7 @@ export function AccountCard({ account }) {
       <Link href={`/account/${id}`}>
         <CardContent>
           <div className="balance-glow text-2xl font-semibold">
-            ${parseFloat(balance).toFixed(2)}
+            {formatINR(balance, { decimals: 2 })}
           </div>
           <p className="text-xs text-muted-foreground mt-1">
             {type.charAt(0) + type.slice(1).toLowerCase()} Account

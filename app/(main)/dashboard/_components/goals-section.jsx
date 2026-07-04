@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Target } from "lucide-react";
 import { SeedDemoButton } from "@/components/seed-demo-button";
+import { formatINR } from "@/lib/format-currency";
 
 export function GoalsSection({ goals }) {
   if (!goals || goals.length === 0) {
@@ -36,13 +37,12 @@ export function GoalsSection({ goals }) {
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium">{goal.name}</p>
               <span className="text-xs font-data text-muted-foreground">
-                ${goal.currentAmount.toLocaleString()} / $
-                {goal.targetAmount.toLocaleString()}
+                {formatINR(goal.currentAmount)} / {formatINR(goal.targetAmount)}
               </span>
             </div>
             <Progress value={goal.progress} className="h-2" />
             <p className="text-xs text-muted-foreground">
-              {goal.progress}% complete · ${goal.remaining.toLocaleString()} remaining
+              {goal.progress}% complete · {formatINR(goal.remaining)} remaining
             </p>
           </div>
         ))}

@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Briefcase } from "lucide-react";
 import { SeedDemoButton } from "@/components/seed-demo-button";
+import { formatINR } from "@/lib/format-currency";
 
 const CHART_COLORS = [
   "hsl(var(--chart-1))",
@@ -71,7 +72,7 @@ export function PortfolioSection({ portfolio }) {
               </div>
               <div className="text-right">
                 <p className="text-sm font-data font-medium">
-                  ${h.currentValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  {formatINR(h.currentValue)}
                 </p>
                 <p
                   className={`text-xs font-data ${
@@ -122,7 +123,7 @@ export function PortfolioSection({ portfolio }) {
             </ResponsiveContainer>
           </div>
           <p className="text-center text-sm text-muted-foreground mt-2">
-            Total: ${totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+            Total: {formatINR(totalValue)}
           </p>
           {portfolio.rebalance?.needsRebalance && (
             <div className="mt-2 text-center space-y-2">

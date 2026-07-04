@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/drawer";
 import { createHolding, deleteHolding } from "@/actions/portfolio";
 import { SeedDemoButton } from "@/components/seed-demo-button";
+import { formatINR } from "@/lib/format-currency";
 
 export function PortfolioClient({ holdings }) {
   const router = useRouter();
@@ -73,7 +74,7 @@ export function PortfolioClient({ holdings }) {
     const amount = searchParams.get("amount");
     const fractional = searchParams.get("fractional");
     if (amount && fractional) {
-      toast.success(`Micro-invest $${amount} — fractional share purchase simulated`);
+      toast.success(`Micro-invest ${formatINR(amount)} — fractional share purchase simulated`);
     }
   }, [searchParams]);
 
@@ -216,7 +217,7 @@ export function PortfolioClient({ holdings }) {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <p className="font-data font-medium">
-                        ${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                        {formatINR(value)}
                       </p>
                       <p
                         className={`text-xs font-data ${

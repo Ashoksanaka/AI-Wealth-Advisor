@@ -1,4 +1,5 @@
 import { Wallet, PiggyBank, Target } from "lucide-react";
+import { formatINR } from "@/lib/format-currency";
 
 export function EmbedWealthSummary({ summary }) {
   if (!summary) return null;
@@ -6,7 +7,7 @@ export function EmbedWealthSummary({ summary }) {
   const stats = [
     {
       label: "Net Worth",
-      value: `$${summary.netWorth.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+      value: formatINR(summary.netWorth),
       icon: Wallet,
     },
     {
